@@ -5,7 +5,21 @@ if (!$conn) {
     die("Failed ". mysqli_connect_error());
 }
 $conn->query('CREATE TABLE user (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id TEXT PRIMARY KEY UNIQUE,
         password TEXT NOT NULL,
-        login TEXT NOT NULL UNIQUE
+        name TEXT NOT NULL,
+        second_name TEXT NOT NULL,
+        phone INT NOT NULL UNIQUE
+);');
+$conn->query('CREATE TABLE balance (
+        id TEXT NOT NULL PRIMARY KEY UNIQUE,
+        user_id INTEGER NOT NULL UNIQUE,
+        amount REAL NOT NULL DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);');
+$conn->query('CREATE TABLE contact (
+        id INTEGER AUTOINCREMENT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        message TEXT NOT NULL
 );');

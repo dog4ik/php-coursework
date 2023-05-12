@@ -1,36 +1,42 @@
 <?php
 
+/**
+ * @var SQLite3 $conn The database connection
+ */
+$conn = require_once("../db_connection.php");
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header("Location: /");
+    exit;
+}
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 if ($_POST) {
-    $username = $_POST['username'];
+    $phone = $_POST['phone'];
     $password = $_POST['password'];
+    //WARN: Read (https://regexlicensing.org/)
+    $regex = "/^(\s|\()?\d{3}(\s|\))?\d{3}(-|\s)?\d{2}(-|\s)?\d{2}$/";
 
     //validate here
-    $conn = new SQLite3("../db/database.db");
-    // Checking the  connection
-    if (!$conn) {
-        die("Failed ". mysqli_connect_error());
-    }
     try {
         // validate the form data
         $passLen = strlen($password);
-        $loginLen = strlen($username);
         if ($passLen<8 or $passLen>40) {
             throw new InvalidArgumentException("Password should be >8 and <40 symbols");
         }
-        if ($loginLen<4 or $loginLen>40) {
-            throw new InvalidArgumentException("Login should be >4 and <40 symbols");
+        if (!preg_match($regex, $phone)) {
+            throw new InvalidArgumentException("Phone is not correct");
         }
-        $stmt = $conn->prepare("SELECT login, password FROM user WHERE login = :login");
+        $stmt = $conn->prepare("SELECT phone, password, id FROM user WHERE phone = :phone");
+        $phone_numbers = (int)preg_replace("/[^0-9]/", "", $phone);
         // Bind parameters
-        $stmt->bindParam(':login', $username);
+        $stmt->bindParam(':phone', $phone_numbers);
         $result = $stmt->execute()->fetchArray(1);
 
         if ($result) {
             if (password_verify($password, $result['password'])) {
-                setcookie('user_id', $result['login'], time() + 3600, '/');
+                $_SESSION['user_id']=$result['id'];
             } else {
                 throw new InvalidArgumentException("Password is incorrect");
             }
@@ -43,8 +49,8 @@ if ($_POST) {
     } catch (InvalidArgumentException $e) {
         // redirect back to the form with error message
         $errorMessage = $e->getMessage();
-        header("Location: /login?error=$errorMessage");
-        $conn = null;
+        header("Location: /login");
+        $_SESSION['errMsg'] = $errorMessage;
         exit();
     }
 
