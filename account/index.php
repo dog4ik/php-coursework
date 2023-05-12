@@ -17,9 +17,9 @@ if ($_SESSION['user_id']) {
 
 ?>
 
-    <h1>Account</h1>
-    <div>
-<?php echo $user_name ?>
-<?php echo $user_phone ?>
+<h1>Account</h1>
+<div>
+  <?php echo $user_name ?>
+  <?php echo $user_phone ?>
 </div>
 <?php include '../footer.php'?>
