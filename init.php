@@ -23,3 +23,17 @@ $conn->query('CREATE TABLE contact (
         email TEXT NOT NULL,
         message TEXT NOT NULL
 );');
+$conn->query('CREATE TABLE stock (
+        id TEXT NOT NULL PRIMARY KEY UNIQUE,
+        name TEXT NOT NULL UNIQUE,
+        price DECIMAL(10,2) NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);');
+$conn->query('CREATE TABLE stock_owner (
+        id TEXT NOT NULL PRIMARY KEY UNIQUE,
+        user_id TEXT NOT NULL UNIQUE,
+        stock_id TEXT NOT NULL,
+        amount DECIMAL(10,2) NOT NULL DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+        FOREIGN KEY (stock_id) REFERENCES stock(id) ON DELETE CASCADE
+);');

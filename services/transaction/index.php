@@ -14,28 +14,33 @@ if ($_SESSION['errMsg']) {
     unset($_SESSION['errMsg']);
 }
 ?>
-<div class="container">
-  <form method="post" action="/services/transaction/action.php">
-    <div class="form-group">
-      <label for="recipient">Recipient Phone Number</label>
-      <div class="input-group my-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text">+7</span>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card bg-black text-white border">
+          <div class="card-body">
+            <h3 class="text-center mb-4">Transaction</h3>
+            <form method="post" action="/services/transaction/action.php">
+              <div class="form-group mb-3">
+                <label for="recipient">Phone Number</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">+7</span>
+                  </div>
+                  <input type="tel" name="recipient" value="<?php echo $_GET['to'] ?>" class="form-control" id="recipient" placeholder="Enter phone number" required>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="amount">Amount</label>
+                <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount" required>
+              </div>
+              <div class="d-flex">
+              <button type="submit" class="btn btn-primary btn-danger mb-4">Transfer</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <input type="text" required class="form-control" id="recipient" name="recipient" placeholder="Phone Number"
-          value=<?php echo $_GET['to']?>>
       </div>
     </div>
-    <div class="form-group">
-      <label for="amount">Amount</label>
-      <div class="input-group my-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
-        </div>
-        <input type="number" required class="form-control" id="amount" name="amount" placeholder="Enter Amount">
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary bg-danger">Transfer</button>
-  </form>
-</div>
+  </div>
 <?php include("../../footer.php")?>

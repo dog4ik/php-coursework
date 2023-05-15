@@ -1,35 +1,51 @@
 <?php include '../header.php'?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Register</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="css/style.css" rel="stylesheet" />
-</head>
-
-<body>
-  <h2>Registration</h2>
   <?php if (isset($_SESSION['errMsg'])): ?>
   <h3 class="alert alert-danger">
     <?php echo $_SESSION['errMsg'];
       unset($_SESSION['errMsg']); ?>
   </h3>
   <?php endif; ?>
-  <form method="post" action="/registration/registration.php">
-    <label for="phone">Phone:</label>
-    <input type="text" id="phone" name="phone" /><br /><br />
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" /><br /><br />
-    <label for="second_name">Second Name:</label>
-    <input type="text" id="second_name" name="second_name" /><br /><br />
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" /><br /><br />
-    <label for="repeat_password">Repeat password:</label>
-    <input type="repeat_password" id="repeat_password" name="repeat_password" /><br /><br />
-    <input type="submit" value="Register" />
-  </form>
-</body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card bg-black text-white border">
+          <div class="card-body">
+            <h3 class="text-center mb-4">Registration</h3>
+            <form method="post" action="/registration/registration.php">
+              <div class="form-group mb-3">
+                <label for="phone">Phone Number</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">+7</span>
+                  </div>
+                <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter phone number" required>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="name">Name</label>
+                <input type="name" name="name" class="form-control" id="name" placeholder="Enter first name" required>
+              </div>
+              <div class="form-group mb-3">
+                <label for="second_name">Second name</label>
+                <input type="second name" name="second_name" class="form-control" id="second_name" placeholder="Enter second name" required>
+              </div>
+              <div class="form-group mb-3">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
+              </div>
+              <div class="form-group mb-3">
+                <label for="repeat_password">Repeat password</label>
+                <input type="password" name="repeat_password" class="form-control" id="repeat_password" placeholder="Repeat password" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-danger mb-4">Login</button>
+            </form>
+            <div class="text-center">
+              <p>Already have an account? <a href="/login">Register</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</html>
+<?php include '../footer.php'?>
