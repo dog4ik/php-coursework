@@ -2,7 +2,7 @@
 
 
 /**
- * @var SQLite3 $conn The database connection
+ * @var PDO $conn The database connection
  */
 $conn = require_once("../../db_connection.php");
 session_start();
@@ -22,7 +22,8 @@ if ($_POST) {
         $phone = (int)preg_replace("/[^0-9]/", "", $recipient);
         $my_balance_query = $conn->prepare("SELECT amount FROM balance WHERE user_id = :my_id");
         $my_balance_query->bindParam("my_id", $my_id);
-        $my_balance = $my_balance_query->execute()->fetchArray(1);
+        $my_balance_query->execute();
+        $my_balance = $my_balance_query->fetch(PDO::FETCH_ASSOC);
         $my_balance_amount = (int)$my_balance['amount'];
         if ((int)$amount_str<=0) {
             throw new InvalidArgumentException("Amount is incorrect");
@@ -34,7 +35,8 @@ if ($_POST) {
 
         $usr_query = $conn->prepare("SELECT id FROM user WHERE phone = :phone");
         $usr_query->bindParam(":phone", $phone);
-        $user = $usr_query->execute()->fetchArray(1);
+        $usr_query->execute();
+        $user = $usr_query->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             $target_user_id = $user['id'];
             if ($target_user_id === $my_id) {

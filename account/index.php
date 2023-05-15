@@ -10,7 +10,8 @@ if ($_SESSION['user_id']) {
     $id = $_SESSION['user_id'];
     $user_stmt = $conn->prepare("SELECT user.phone, user.name, user.second_name, balance.amount FROM user INNER JOIN balance ON user.id = balance.user_id WHERE user.id = :id");
     $user_stmt->bindParam(':id', $id);
-    $res = $user_stmt->execute()->fetchArray(1);
+    $user_stmt->execute();
+    $res = $user_stmt->fetch(PDO::FETCH_ASSOC);
     $user_phone = $res['phone'];
     $user_name = $res['name'];
     $user_second_name = $res['second_name'];

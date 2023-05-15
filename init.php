@@ -1,6 +1,6 @@
 <?php
 
-$conn = new SQLite3("./db/database.db");
+$conn = new PDO("sqlite:./db/database.db");
 if (!$conn) {
     die("Failed ". mysqli_connect_error());
 }
@@ -16,12 +16,6 @@ $conn->query('CREATE TABLE balance (
         user_id INTEGER NOT NULL UNIQUE,
         amount REAL NOT NULL DEFAULT 0,
         FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-);');
-$conn->query('CREATE TABLE contact (
-        id INTEGER AUTOINCREMENT PRIMARY KEY,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL,
-        message TEXT NOT NULL
 );');
 $conn->query('CREATE TABLE stock (
         id TEXT NOT NULL PRIMARY KEY UNIQUE,

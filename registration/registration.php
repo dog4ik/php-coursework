@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var SQLite3 $conn The database connection
+ * @var PDO $conn The database connection
  */
 $conn = require_once("../db_connection.php");
 session_start();

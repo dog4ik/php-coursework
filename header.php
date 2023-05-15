@@ -1,15 +1,17 @@
 <?php
 
 /**
- * @var SQLite3 $conn The database connection
+ * @var PDO $conn The database connection
  */
 $conn = require_once("/home/dog4ik/personal/php/db_connection.php");
 session_start();
 if ($_SESSION['user_id']) {
     $id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT name, second_name FROM user WHERE id = :id");
+
     $stmt->bindParam(':id', $id);
-    $result = $stmt->execute()->fetchArray(1);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $user_name = $result['name'];
 }
 ?>
