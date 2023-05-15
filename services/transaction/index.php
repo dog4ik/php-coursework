@@ -4,22 +4,19 @@ if (!$_SESSION['user_id']) {
     header("Location: /login");
     exit();
 }
+include("../../toast.php");
+if ($_SESSION['sucMsg']) {
+    echo create_toast("success", "Balance", $_SESSION['sucMsg']);
+    unset($_SESSION['sucMsg']);
+}
+if ($_SESSION['errMsg']) {
+    echo create_toast("error", "Failed", $_SESSION['errMsg']);
+    unset($_SESSION['errMsg']);
+}
 ?>
 <div class="container">
   <form method="post" action="/services/transaction/action.php">
     <div class="form-group">
-      <?php if (isset($_SESSION['errMsg'])): ?>
-      <h3 class="alert alert-danger">
-        <?php echo $_SESSION['errMsg'];
-      unset($_SESSION['errMsg']); ?>
-      </h3>
-      <?php endif; ?>
-      <?php if (isset($_SESSION['sucMsg'])): ?>
-      <h3 class="alert alert-success">
-        <?php echo $_SESSION['sucMsg'];
-      unset($_SESSION['sucMsg']); ?>
-      </h3>
-      <?php endif; ?>
       <label for="recipient">Recipient Phone Number</label>
       <div class="input-group my-2">
         <div class="input-group-prepend">
