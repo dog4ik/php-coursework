@@ -1,6 +1,7 @@
 <?php
 
-$conn = new PDO("sqlite:/home/dog4ik/personal/php/db/database.db");
+$curr_dir = __DIR__;
+$conn = new PDO("sqlite:$curr_dir/db/database.db");
 if (!$conn) {
     die("Failed ". mysqli_connect_error());
 }

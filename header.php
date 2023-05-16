@@ -1,9 +1,10 @@
 <?php
 
+$curr_dir = __DIR__;
 /**
  * @var PDO $conn The database connection
  */
-$conn = require_once("/home/dog4ik/personal/php/db_connection.php");
+$conn = require_once("$curr_dir/db_connection.php");
 session_start();
 if ($_SESSION['user_id']) {
     $id = $_SESSION['user_id'];
